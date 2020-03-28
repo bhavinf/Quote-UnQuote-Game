@@ -1,0 +1,104 @@
+import string
+
+no_of_steps =0
+xdict = {}
+udict = {}
+
+def diffColor (ostr, dstr):
+    tstr = ''
+    for ind in range(0,len(ostr)):
+        if (ostr[ind] != dstr[ind]):
+            tstr += prCyan(dstr[ind])
+        else:
+            if (dstr[ind] in y):
+                tstr += '_'
+            else:
+                tstr += dstr[ind]
+    return tstr
+
+def prCyan(skk): return ("\033[96m{}\033[00m".format(skk))
+
+def take_input():
+    return (input("Enter a string : ").upper())
+
+def replace_string(mstr, mdict):
+    tstr = ''
+    for i in mstr:
+        if (i in y):
+            i = mdict[i]
+        tstr += i
+    return tstr
+
+x = take_input ()
+
+print("\n"*100)
+
+disp_str = usr_str = rep_str = og_str = required_str = x
+
+x = set(x)
+
+y = set (string.ascii_uppercase)
+y = list(y)
+
+
+dif_level = 0
+
+while (dif_level not in (1,2,3)):
+    dif_level = int(input("Choose difficulty level\nEnter 1 for Easy\nEnter 2 for Medium \nEnter 3 for Difficult\n"))
+
+if (dif_level == 1):
+     l1 = set (required_str)
+     l1 = list(l1)
+     l1.sort()
+
+     for i in l1:
+         if (i not in y):
+            l1.remove(i)
+
+elif (dif_level == 2):
+     l2 = list (string.ascii_uppercase)
+
+
+
+
+n=1
+for i in x:
+    if (i in y):
+        if (i == y[n]):
+            n += 1
+        xdict[i] = y[n]
+        udict[y[n]] = y[n]
+        n=n+1
+rep_str = replace_string(og_str, xdict)
+print("Decode this string : ", rep_str)
+usr_str=rep_str
+n=''
+while (n not in xdict):
+    n=x.pop()
+print ("Hint: Value of ", xdict[n], " is ", n)
+while (usr_str != og_str):
+
+    g = str(input("\nWhich alphabet do you want to replace : ").upper())
+    h = str(input("With what do you want to replace " + g + "?").upper())
+
+    if g in udict:
+        udict[g] = h
+    usr_str=replace_string(rep_str, udict)
+
+    print("Decode this string : ", rep_str)
+    print ("Your decoded value : ", diffColor(rep_str, usr_str))
+
+    if (dif_level == 1):
+        if (h in l1):
+            l1.remove(h)
+        print(l1)
+
+    elif (dif_level == 2):
+        if (h in l2):
+            l2.remove(h)
+        print("The remaining elements are : ", l2)
+
+
+    no_of_steps+=1
+
+print("Yaay!! You got the answer in " ,no_of_steps, " steps")
